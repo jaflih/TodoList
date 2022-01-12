@@ -75,6 +75,10 @@ select:focus {
   margin-right: 10px;
 }
 
+.tasks input {
+  color: black;
+}
+
 input::placeholder {
   font-style: italic;
 }

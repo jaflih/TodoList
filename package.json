@@ -11,7 +11,7 @@
     "start": "webpack serve --open",
     "lcss": "stylelint '**/*.{css,scss}'",
     "lfcss": "stylelint '**/*.{css,scss}' --fix",
-    "lhtml": "npx eslint .",
+    "lhtml": "npx hint .",
     "ljs": "npx eslint .",
     "lfjs": "npx eslint . --fix",
     "deploy": "gh-pages -d dist"
