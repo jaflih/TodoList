@@ -54,6 +54,10 @@ section {
   padding: 20px;
 }
 
+.completed {
+  text-decoration: line-through;
+}
+
 .task {
   display: flex;
   justify-content: space-between;

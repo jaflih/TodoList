@@ -1,5 +1,6 @@
 import Task from './task.js';
 import StorageManager from './storage_manager.js';
+import StatusManager from './status_manager.js';
 
 export default class TasksManager {
   constructor() {
@@ -7,6 +8,8 @@ export default class TasksManager {
   }
 
   getTasks = () => this.tasks.sort((a, b) => a.index - b.index);
+
+  getTask = (index) => this.tasks[index - 1];
 
   addTask = (description, completed = false) => {
     const newTask = new Task(this.tasks.length + 1, description, completed);
@@ -37,5 +40,17 @@ export default class TasksManager {
     StorageManager.save(this.tasks);
 
     return this.tasks[index - 1];
+  };
+
+  updateStatus = (index, status) => {
+    StatusManager.updateStatus(this.getTask(index), status);
+    StorageManager.save(this.tasks);
+    return this.getTask(index);
+  };
+
+  clearCompleted = () => {
+    this.tasks = this.tasks.filter((t) => t.completed == false);
+    StorageManager.save(this.tasks);
+    return this.tasks;
   };
 }
