@@ -15,15 +15,15 @@ export default class TasksManager {
     return newTask;
   };
 
-  deleteTask = (e) => {
+  deleteTask = (index) => {
     const newTasks = [];
-    const taskIndex = e - 1;
+    const taskIndex = index - 1;
 
-    this.tasks.forEach((t, index) => {
-      if (index < taskIndex) {
+    this.tasks.forEach((t, i) => {
+      if (i < taskIndex) {
         newTasks.push(t);
-      } else if (index > taskIndex) {
-        t.index = index;
+      } else if (i > taskIndex) {
+        t.index = i;
         newTasks.push(t);
       }
     });
