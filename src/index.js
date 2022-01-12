@@ -10,6 +10,7 @@ const manager = new TasksManager();
 const updateTask = (event, index) => {
   if (event.key === 'Enter') {
     manager.updateTask(index, selector(`.task_${index}`).value, selector(`.task_${index}_checkbox`).checked);
+    selector('.add_task input').focus();
   }
 };
 
@@ -31,6 +32,7 @@ input.addEventListener('keyup', ({ key }) => {
   if (key === 'Enter') {
     const task = manager.addTask(input.value);
     DisplayManager.displayTask(selector('.tasks'), task);
+    input.value = '';
 
     selector(`#task_${task.index}`).addEventListener('click', () => {
       deleteTask(task.index);
@@ -39,5 +41,7 @@ input.addEventListener('keyup', ({ key }) => {
     selector(`#input_task_${task.index}`).addEventListener('keyup', (event) => {
       updateTask(event, task.index);
     });
+
+    selector(`#input_task_${task.index}`).focus();
   }
 });
