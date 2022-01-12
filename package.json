@@ -1,7 +1,7 @@
 {
   "name": "todolist",
   "version": "1.0.0",
-  "description": "![]()",
+  "description": "",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -21,12 +21,12 @@
     "url": "git+https://github.com/jihaneH/TodoList.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jihane Haddad",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jihaneH/TodoList/issues"
   },
-  "homepage": "https://github.com/jihaneH/TodoList#readme",
+  "homepage": "https://jihaneh.github.io/TodoList/",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.5.1",
