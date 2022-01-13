@@ -4,7 +4,8 @@ import StatusManager from './status_manager.js';
 
 export default class TasksManager {
   constructor() {
-    this.tasks = [];
+    this.tasks = StorageManager.load();
+    console.log(this.tasks);
   }
 
   getTasks = () => this.tasks.sort((a, b) => a.index - b.index);
