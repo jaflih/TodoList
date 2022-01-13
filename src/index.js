@@ -19,23 +19,17 @@ const deleteTask = (index) => {
   DisplayManager.reset(selector('.tasks'));
   manager.getTasks().forEach((task) => DisplayManager.displayTask(selector('.tasks'), task));
 
-  selectorAll('.fa-trash').forEach((e) =>
-    e.addEventListener('click', () => {
-      deleteTask(e.dataset.id);
-    })
-  );
+  selectorAll('.fa-trash').forEach((e) => e.addEventListener('click', () => {
+    deleteTask(e.dataset.id);
+  }));
 
-  selectorAll('.input_task').forEach((e) =>
-    e.addEventListener('keyup', (event) => {
-      updateTask(event, e.dataset.id);
-    })
-  );
+  selectorAll('.input_task').forEach((e) => e.addEventListener('keyup', (event) => {
+    updateTask(event, e.dataset.id);
+  }));
 
-  selectorAll('.input_task').forEach((e) =>
-    e.addEventListener('focusout', (event) => {
-      updateTask(event, e.dataset.id, true);
-    })
-  );
+  selectorAll('.input_task').forEach((e) => e.addEventListener('focusout', (event) => {
+    updateTask(event, e.dataset.id, true);
+  }));
 };
 
 const createTask = () => {
