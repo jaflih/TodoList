@@ -50,6 +50,9 @@ export default class TasksManager {
 
   clearCompleted = () => {
     this.tasks = this.tasks.filter((t) => t.completed === false);
+    this.tasks.forEach((task, index) => {
+      task.index = index + 1;
+    });
     StorageManager.save(this.tasks);
     return this.tasks;
   };

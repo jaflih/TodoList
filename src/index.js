@@ -87,3 +87,5 @@ input.addEventListener('keyup', ({ key }) => {
 });
 
 selector('.fa-plus').addEventListener('click', () => createTask());
+
+display();
