@@ -19,37 +19,49 @@ const deleteTask = (index) => {
   DisplayManager.reset(selector('.tasks'));
   manager.getTasks().forEach((task) => DisplayManager.displayTask(selector('.tasks'), task));
 
-  selectorAll('.fa-trash').forEach((e) => e.addEventListener('click', () => {
-    deleteTask(e.dataset.id);
-  }));
+  selectorAll('.fa-trash').forEach((e) =>
+    e.addEventListener('click', () => {
+      deleteTask(e.dataset.id);
+    })
+  );
 
-  selectorAll('.input_task').forEach((e) => e.addEventListener('keyup', (event) => {
-    updateTask(event, e.dataset.id);
-  }));
+  selectorAll('.input_task').forEach((e) =>
+    e.addEventListener('keyup', (event) => {
+      updateTask(event, e.dataset.id);
+    })
+  );
 
-  selectorAll('.input_task').forEach((e) => e.addEventListener('focusout', (event) => {
-    updateTask(event, e.dataset.id, true);
-  }));
+  selectorAll('.input_task').forEach((e) =>
+    e.addEventListener('focusout', (event) => {
+      updateTask(event, e.dataset.id, true);
+    })
+  );
+};
+
+const createTask = () => {
+  const task = manager.addTask(input.value);
+  DisplayManager.displayTask(selector('.tasks'), task);
+  input.value = '';
+
+  selector(`#task_${task.index}`).addEventListener('click', () => {
+    deleteTask(task.index);
+  });
+
+  selector(`#input_task_${task.index}`).addEventListener('keyup', (event) => {
+    updateTask(event, task.index);
+  });
+
+  selector(`#input_task_${task.index}`).addEventListener('focusout', (event) => {
+    updateTask(event, task.index, true);
+  });
+
+  selector(`#input_task_${task.index}`).focus();
 };
 
 input.addEventListener('keyup', ({ key }) => {
   if (key === 'Enter') {
-    const task = manager.addTask(input.value);
-    DisplayManager.displayTask(selector('.tasks'), task);
-    input.value = '';
-
-    selector(`#task_${task.index}`).addEventListener('click', () => {
-      deleteTask(task.index);
-    });
-
-    selector(`#input_task_${task.index}`).addEventListener('keyup', (event) => {
-      updateTask(event, task.index);
-    });
-
-    selector(`#input_task_${task.index}`).addEventListener('focusout', (event) => {
-      updateTask(event, task.index, true);
-    });
-
-    selector(`#input_task_${task.index}`).focus();
+    createTask();
   }
 });
+
+selector('.fa-plus').addEventListener('click', () => createTask());
