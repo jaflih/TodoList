@@ -7,8 +7,8 @@ const selectorAll = (element) => document.querySelectorAll(element);
 const input = selector('input');
 const manager = new TasksManager();
 
-const updateTask = (event, index) => {
-  if (event.key === 'Enter') {
+const updateTask = (event, index, focus = false) => {
+  if (event.key === 'Enter' || focus) {
     manager.updateTask(index, selector(`.task_${index}`).value, selector(`.task_${index}_checkbox`).checked);
     selector('.add_task input').focus();
   }
@@ -42,34 +42,57 @@ const display = () => {
     })
   );
 };
+
 const deleteTask = (index) => {
   manager.deleteTask(index);
   display();
+
+  selectorAll('.input_task').forEach((e) =>
+    e.addEventListener('keyup', (event) => {
+      updateTask(event, e.dataset.id);
+    })
+  );
+
+  selectorAll('.input_task').forEach((e) =>
+    e.addEventListener('focusout', (event) => {
+      updateTask(event, e.dataset.id, true);
+    })
+  );
 };
 
-input.addEventListener('keyup', ({ key }) => {
-  if (key === 'Enter') {
-    const task = manager.addTask(input.value);
-    DisplayManager.displayTask(selector('.tasks'), task);
-    input.value = '';
+const createTask = () => {
+  const task = manager.addTask(input.value);
+  DisplayManager.displayTask(selector('.tasks'), task);
+  input.value = '';
 
-    selector(`#task_${task.index}`).addEventListener('click', () => {
-      deleteTask(task.index);
-    });
+  selector(`#task_${task.index}`).addEventListener('click', () => {
+    deleteTask(task.index);
+  });
 
-    selector(`#input_task_${task.index}`).addEventListener('keyup', (event) => {
-      updateTask(event, task.index);
-    });
+  selector(`#input_task_${task.index}`).addEventListener('keyup', (event) => {
+    updateTask(event, task.index);
+  });
 
-    selector(`#checkbox_task_${task.index}`).addEventListener('change', () => {
-      updateStatus(task.index);
-    });
+  selector(`#input_task_${task.index}`).addEventListener('focusout', (event) => {
+    updateTask(event, task.index, true);
+  });
 
-    selector(`#input_task_${task.index}`).focus();
-  }
-});
+  selector(`#checkbox_task_${task.index}`).addEventListener('change', () => {
+    updateStatus(task.index);
+  });
+
+  selector(`#input_task_${task.index}`).focus();
+};
 
 selector('.footer').addEventListener('click', () => {
   manager.clearCompleted();
   display();
 });
+
+input.addEventListener('keyup', ({ key }) => {
+  if (key === 'Enter') {
+    createTask();
+  }
+});
+
+selector('.fa-plus').addEventListener('click', () => createTask());
