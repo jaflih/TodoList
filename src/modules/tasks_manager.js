@@ -5,7 +5,6 @@ import StatusManager from './status_manager.js';
 export default class TasksManager {
   constructor() {
     this.tasks = StorageManager.load();
-    console.log(this.tasks);
   }
 
   getTasks = () => this.tasks.sort((a, b) => a.index - b.index);
@@ -50,7 +49,7 @@ export default class TasksManager {
   };
 
   clearCompleted = () => {
-    this.tasks = this.tasks.filter((t) => t.completed == false);
+    this.tasks = this.tasks.filter((t) => t.completed === false);
     StorageManager.save(this.tasks);
     return this.tasks;
   };
