@@ -13,7 +13,7 @@
 
 ## Live Demo
 
-[Live Demo Link](https://jihaneh.github.io/TodoList/dist/)
+[Live Demo Link](https://jihaneh.github.io/TodoList/)
 
 ## Getting Started
 
