@@ -5,7 +5,8 @@ body {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   margin: 0;
-  color: #645f5f;
+  color: #645f5f7a;
+  caret-color: magenta;
 }
 
 section {
@@ -40,6 +41,7 @@ section {
   margin: 0;
   font-size: 16px;
   font-weight: 400;
+  color: #645f5f;
 }
 
 .todo .tasks,
@@ -55,6 +57,7 @@ section {
 .task {
   display: flex;
   justify-content: space-between;
+  transition: background-color 0.5s ease;
 }
 
 .todo .tasks {
@@ -73,6 +76,20 @@ select:focus {
   color: cadetblue;
   line-height: 28px;
   margin-right: 10px;
+  transition: background-color 0.5s ease;
+}
+
+.tasks input {
+  color: black;
+}
+
+.task:focus-within {
+  background-color: #ffff0052;
+}
+
+.task:focus-within input {
+  background-color: #ffff0008;
+  transition: background-color 0s ease;
 }
 
 input::placeholder {
