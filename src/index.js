@@ -2,9 +2,9 @@
 import './style.css';
 import TasksManager from './modules/tasks_manager.js';
 import DisplayManager from './modules/display_manager.js';
+import { selector, selectorAll } from './modules/tools.js';
+import DragAndDrop from './modules/drag_and_drop.js';
 
-const selector = (element) => document.querySelector(element);
-const selectorAll = (element) => document.querySelectorAll(element);
 const input = selector('input');
 const manager = new TasksManager();
 
@@ -25,30 +25,40 @@ const display = () => {
 
   manager.getTasks().forEach((task) => DisplayManager.displayTask(selector('.tasks'), task));
 
-  selectorAll('.fa-trash').forEach((e) => e.addEventListener('click', () => {
-    deleteTask(e.dataset.id);
-  }));
+  selectorAll('.fa-trash').forEach((e) =>
+    e.addEventListener('click', () => {
+      deleteTask(e.dataset.id);
+    })
+  );
 
-  selectorAll('.input_task').forEach((e) => e.addEventListener('keyup', (event) => {
-    updateTask(event, e.dataset.id);
-  }));
+  selectorAll('.input_task').forEach((e) =>
+    e.addEventListener('keyup', (event) => {
+      updateTask(event, e.dataset.id);
+    })
+  );
 
-  selectorAll('.checkbox_task').forEach((e) => e.addEventListener('change', () => {
-    updateStatus(e.dataset.id);
-  }));
+  selectorAll('.checkbox_task').forEach((e) =>
+    e.addEventListener('change', () => {
+      updateStatus(e.dataset.id);
+    })
+  );
 };
 
 const deleteTask = (index) => {
   manager.deleteTask(index);
   display();
 
-  selectorAll('.input_task').forEach((e) => e.addEventListener('keyup', (event) => {
-    updateTask(event, e.dataset.id);
-  }));
+  selectorAll('.input_task').forEach((e) =>
+    e.addEventListener('keyup', (event) => {
+      updateTask(event, e.dataset.id);
+    })
+  );
 
-  selectorAll('.input_task').forEach((e) => e.addEventListener('focusout', (event) => {
-    updateTask(event, e.dataset.id, true);
-  }));
+  selectorAll('.input_task').forEach((e) =>
+    e.addEventListener('focusout', (event) => {
+      updateTask(event, e.dataset.id, true);
+    })
+  );
 };
 
 const createTask = () => {
@@ -73,6 +83,11 @@ const createTask = () => {
   });
 
   selector(`#input_task_${task.index}`).focus();
+
+  selectorAll('.task').forEach((e) => {
+    e.addEventListener('dragstart', DragAndDrop.dragStartEvent);
+    e.addEventListener('dragend', DragAndDrop.dragEndEvent);
+  });
 };
 
 selector('.footer').addEventListener('click', () => {
@@ -89,3 +104,16 @@ input.addEventListener('keyup', ({ key }) => {
 selector('.fa-plus').addEventListener('click', () => createTask());
 
 display();
+
+//
+
+selectorAll('.task').forEach((e) => {
+  e.addEventListener('dragstart', DragAndDrop.dragStartEvent);
+  e.addEventListener('dragend', DragAndDrop.dragEndEvent);
+});
+
+let depot = document.querySelector('.depot');
+depot.addEventListener('dragenter', DragAndDrop.dragEnterEvent);
+depot.addEventListener('dragleave', DragAndDrop.dragLeaveEvent);
+depot.addEventListener('dragover', DragAndDrop.dragOverEvent);
+depot.addEventListener('drop', DragAndDrop.dropEvent);
