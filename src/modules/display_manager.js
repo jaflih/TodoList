@@ -6,7 +6,7 @@ export default class DisplayManager {
   static displayTask = (parent, task) => {
     const taskDiv = DisplayManager.createHtml(parent, 'div', 'task');
     taskDiv.dataset.id = task.index;
-    taskDiv.id = 'task_' + task.index;
+    taskDiv.id = `task_${task.index}`;
     taskDiv.setAttribute('draggable', 'true');
     taskDiv.setAttribute('data-effectallowed', 'move');
     taskDiv.setAttribute('data-position', task.index - 1);

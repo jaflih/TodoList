@@ -25,40 +25,30 @@ const display = () => {
 
   manager.getTasks().forEach((task) => DisplayManager.displayTask(selector('.tasks'), task));
 
-  selectorAll('.fa-trash').forEach((e) =>
-    e.addEventListener('click', () => {
-      deleteTask(e.dataset.id);
-    })
-  );
+  selectorAll('.fa-trash').forEach((e) => e.addEventListener('click', () => {
+    deleteTask(e.dataset.id);
+  }));
 
-  selectorAll('.input_task').forEach((e) =>
-    e.addEventListener('keyup', (event) => {
-      updateTask(event, e.dataset.id);
-    })
-  );
+  selectorAll('.input_task').forEach((e) => e.addEventListener('keyup', (event) => {
+    updateTask(event, e.dataset.id);
+  }));
 
-  selectorAll('.checkbox_task').forEach((e) =>
-    e.addEventListener('change', () => {
-      updateStatus(e.dataset.id);
-    })
-  );
+  selectorAll('.checkbox_task').forEach((e) => e.addEventListener('change', () => {
+    updateStatus(e.dataset.id);
+  }));
 };
 
 const deleteTask = (index) => {
   manager.deleteTask(index);
   display();
 
-  selectorAll('.input_task').forEach((e) =>
-    e.addEventListener('keyup', (event) => {
-      updateTask(event, e.dataset.id);
-    })
-  );
+  selectorAll('.input_task').forEach((e) => e.addEventListener('keyup', (event) => {
+    updateTask(event, e.dataset.id);
+  }));
 
-  selectorAll('.input_task').forEach((e) =>
-    e.addEventListener('focusout', (event) => {
-      updateTask(event, e.dataset.id, true);
-    })
-  );
+  selectorAll('.input_task').forEach((e) => e.addEventListener('focusout', (event) => {
+    updateTask(event, e.dataset.id, true);
+  }));
 };
 
 const createTask = () => {
@@ -112,7 +102,7 @@ selectorAll('.task').forEach((e) => {
   e.addEventListener('dragend', DragAndDrop.dragEndEvent);
 });
 
-let depot = document.querySelector('.depot');
+const depot = document.querySelector('.depot');
 depot.addEventListener('dragenter', DragAndDrop.dragEnterEvent);
 depot.addEventListener('dragleave', DragAndDrop.dragLeaveEvent);
 depot.addEventListener('dragover', DragAndDrop.dragOverEvent);

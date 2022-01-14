@@ -1,4 +1,6 @@
-import { selector, hasClass, addClass, removeClass } from './tools.js';
+import {
+  selector, hasClass, addClass, removeClass,
+} from './tools.js';
 
 let dernierElementParcouru;
 
@@ -19,8 +21,6 @@ export default class DragAndDrop {
   };
 
   static dragLeaveEvent = (evt) => {
-    if (evt.target == dernierElementParcouru) {
-    }
     removeClass(evt.target, 'dragSurvol');
   };
 
@@ -35,67 +35,55 @@ export default class DragAndDrop {
     if (evt.currentTarget.contains(evt.relatedTarget)) {
       return;
     }
-    if (evt.target.id == 'depot') {
-      console.log('CAS E');
-    } else {
-      //let element = selector('#' + evt.target.id);
-      let dt = evt.dataTransfer;
-      let elementADeplacer = selector('#' + dt.getData('tex/html'));
-      let items = document.querySelectorAll('.task');
+    if (evt.target.id !== 'depot') {
+      const dt = evt.dataTransfer;
+      const elToMove = selector(`#${dt.getData('tex/html')}`);
+      const items = document.querySelectorAll('.task');
 
-      if (elementADeplacer.dataset.position - dernierElementParcouru.dataset.position == 1) {
-        // inversion
-        //console.log('CAS A');
-        let old = elementADeplacer.dataset.position;
-        dernierElementParcouru.before(elementADeplacer);
-        elementADeplacer.dataset.position = dernierElementParcouru.dataset.position;
+      if (elToMove.dataset.position - dernierElementParcouru.dataset.position === 1) {
+        const old = elToMove.dataset.position;
+        dernierElementParcouru.before(elToMove);
+        elToMove.dataset.position = dernierElementParcouru.dataset.position;
         dernierElementParcouru.dataset.position = old;
-      } else if (elementADeplacer.dataset.position - dernierElementParcouru.dataset.position == -1) {
-        // inversion
-        //console.log('CAS B');
-
-        dernierElementParcouru.after(elementADeplacer);
-        let old = elementADeplacer.dataset.position;
-        elementADeplacer.dataset.position = dernierElementParcouru.dataset.position;
+      } else if (elToMove.dataset.position - dernierElementParcouru.dataset.position === -1) {
+        dernierElementParcouru.after(elToMove);
+        const old = elToMove.dataset.position;
+        elToMove.dataset.position = dernierElementParcouru.dataset.position;
         dernierElementParcouru.dataset.position = old;
-      } else if (elementADeplacer.dataset.position - dernierElementParcouru.dataset.position > 1) {
-        //console.log('CAS C');
+      } else if (elToMove.dataset.position - dernierElementParcouru.dataset.position > 1) {
+        const min = dernierElementParcouru.dataset.position;
+        const max = elToMove.dataset.position;
 
-        let min = dernierElementParcouru.dataset.position;
-        let max = elementADeplacer.dataset.position;
+        dernierElementParcouru.before(elToMove);
 
-        dernierElementParcouru.before(elementADeplacer);
-
-        for (let i = 0; i < items.length; i++) {
-          let e = items[i];
-          let position = e.dataset.position;
+        for (let i = 0; i < items.length; i += 1) {
+          const e = items[i];
+          const { position } = e.dataset;
 
           if (min <= position && position <= max) {
-            if (e.id == elementADeplacer.id) {
+            if (e.id === elToMove.id) {
               e.dataset.position = min;
             } else {
-              let w = Number.parseInt(position) + 1;
+              const w = Number.parseInt(position, 10) + 1;
               e.dataset.position = w;
             }
           }
         }
-      } else if (elementADeplacer.dataset.position - dernierElementParcouru.dataset.position < 1) {
-        //console.log('CAS D');
+      } else if (elToMove.dataset.position - dernierElementParcouru.dataset.position < 1) {
+        const max = dernierElementParcouru.dataset.position;
+        const min = elToMove.dataset.position;
 
-        let max = dernierElementParcouru.dataset.position;
-        let min = elementADeplacer.dataset.position;
+        dernierElementParcouru.after(elToMove);
 
-        dernierElementParcouru.after(elementADeplacer);
-
-        for (let i = 0; i < items.length; i++) {
-          let e = items[i];
-          let position = e.dataset.position;
+        for (let i = 0; i < items.length; i += 1) {
+          const e = items[i];
+          const { position } = e.dataset;
 
           if (min <= position && position <= max) {
-            if (e.id == elementADeplacer.id) {
+            if (e.id === elToMove.id) {
               e.dataset.position = max;
             } else {
-              let w = Number.parseInt(position) - 1;
+              const w = Number.parseInt(position, 10) - 1;
               e.dataset.position = w;
             }
           }
