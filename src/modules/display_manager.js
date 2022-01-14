@@ -5,11 +5,20 @@ export default class DisplayManager {
 
   static displayTask = (parent, task) => {
     const taskDiv = DisplayManager.createHtml(parent, 'div', 'task');
+    taskDiv.dataset.id = task.index;
+    taskDiv.id = `task_${task.index}`;
+    taskDiv.setAttribute('draggable', 'true');
+    taskDiv.setAttribute('data-effectallowed', 'move');
+    taskDiv.setAttribute('data-position', task.index - 1);
+    taskDiv.setAttribute('data-id', task.index);
+
     const taskInput = DisplayManager.createHtml(taskDiv, 'div', 'task_input');
 
     const input = DisplayManager.createHtml(taskInput, 'input');
     input.setAttribute('type', 'checkbox');
-    input.setAttribute('class', `task_${task.index}_checkbox`);
+    input.setAttribute('class', `task_${task.index}_checkbox checkbox_task`);
+    input.id = `checkbox_task_${task.index}`;
+    input.dataset.id = task.index;
 
     const input2 = DisplayManager.createHtml(taskInput, 'input');
     input2.setAttribute('type', 'text');
