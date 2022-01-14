@@ -48,6 +48,19 @@ export default class TasksManager {
     return this.getTask(index);
   };
 
+  updateTasksPosition(tab) {
+    const newTasks = [];
+    tab.forEach((node) => {
+      const t = this.tasks[node.dataset.id - 1];
+      t.index = Number.parseInt(node.dataset.position, 10) + 1;
+      node.dataset.id = t.index;
+      newTasks.push(t);
+    });
+    this.tasks = newTasks;
+
+    StorageManager.save(this.tasks);
+  }
+
   clearCompleted = () => {
     this.tasks = this.tasks.filter((t) => t.completed === false);
     this.tasks.forEach((task, index) => {

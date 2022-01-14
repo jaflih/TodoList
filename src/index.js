@@ -106,4 +106,7 @@ const depot = document.querySelector('.depot');
 depot.addEventListener('dragenter', DragAndDrop.dragEnterEvent);
 depot.addEventListener('dragleave', DragAndDrop.dragLeaveEvent);
 depot.addEventListener('dragover', DragAndDrop.dragOverEvent);
-depot.addEventListener('drop', DragAndDrop.dropEvent);
+depot.addEventListener('drop', (event) => {
+  DragAndDrop.dropEvent(event);
+  manager.updateTasksPosition(depot.childNodes);
+});
